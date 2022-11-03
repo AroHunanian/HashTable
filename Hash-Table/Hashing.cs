@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Hash_Table
 {
@@ -11,6 +12,7 @@ namespace Hash_Table
         public string InputText;
         public string OutputText;
         byte[] Hash;
+        string[] StringHash;
 
         public Hashing(string inputText)
         {
@@ -21,26 +23,59 @@ namespace Hash_Table
        
         public void  HashCode(string binaryCode)
         {
-            
             for (int i = binaryCode.Length; i >0 ; i--)
             {
                 OutputText +=binaryCode[i];
             }
         }
-        public void GetHashCodeee()
+        public string DivideInputText(string text)
         {
-             stringToASSCII(InputText);
+            StringBuilder newText = new StringBuilder();
+            for (int i = 0; i < text.Length; i+=4)
+            {
+                text[i] += ".";
+            }
+        }
+        public new void GetHashCode()
+        {
+            Hash =  stringToASSCII(InputText);
+
             string binary = ASSCIIToBinary(Hash);
+            ByteToString();
+            FillBytes();
             long dec = BinaryToDecimal(binary);
             Console.WriteLine(dec);
         }
-       
+        public void ByteToString()
+        {
+            StringHash = new string[Hash.Length + (Hash.Length / 4)];
+            for (int i = 0; i < StringHash.Length; i++)
+            {if (i % 4 == 0)
+                    StringHash[i] = stringToASSCII(".").ToString();
+                StringHash[i] = Hash[i].ToString();
+            }
+        }
         private byte[] stringToASSCII(string text)
         {
-
-           Hash = Encoding.ASCII.GetBytes(text);
-        
-            return Hash;
+            return Encoding.ASCII.GetBytes(text); 
+        }
+        private void FillBytes()
+        {
+            for (int i = 0; i < StringHash.Length; i++)
+            {
+                if (StringHash[i].Length < 8)
+                {
+                    StringHash[i] = (FillZeros(StringHash[i]));
+                }
+            }
+        }
+        private string FillZeros(string digits)
+        {
+            while (digits.Length < 8)
+            {
+                digits = "0" + digits;
+            }
+            return digits;
         }
         private string ASSCIIToBinary(byte[] asciiCode)
         {
