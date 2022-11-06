@@ -21,8 +21,10 @@ namespace Hash_Table
         public static Binary operator +(Binary a, Binary b)
             => new Binary(Convert.ToString(Convert.ToInt32(a._binary, 2) +
                           Convert.ToInt32(b._binary, 2), 2));
-        
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Binary Code</returns>
         public override string ToString()
             => $"{_binary}";
         

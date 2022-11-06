@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
+
 
 
 namespace Hash_Table
@@ -19,7 +19,9 @@ namespace Hash_Table
             InputText = inputText;
 
         }
-
+        /// <summary>
+        /// Get Hash Code
+        /// </summary>
         public new void GetHashCode()
         {
             Binary sum = new Binary();
@@ -28,8 +30,8 @@ namespace Hash_Table
             {
                 if (i + 4 < InputText.Length)
                 {
-                    Hash = stringToASSCII(InputText.Substring(i, 4));
-                    Binary binary = new Binary(ASSCIIToBinary(Hash));
+                    Hash = stringToASCII(InputText.Substring(i, 4));
+                    Binary binary = new Binary(ASCIIToBinary(Hash));
                     sum += binary;
                     Console.WriteLine(binary.ToString());
                     if (i + 8 > InputText.Length)
@@ -39,20 +41,32 @@ namespace Hash_Table
                 }
                 else
                 {
-                    Hash = stringToASSCII(InputText.Substring(i, InputText.Length - i));
-                    Binary binary = new Binary(ASSCIIToBinary(Hash));
+                    Hash = stringToASCII(InputText.Substring(i, InputText.Length - i));
+                    Binary binary = new Binary(ASCIIToBinary(Hash));
                     sum += binary;
                     Console.WriteLine(BinaryToDecimal(sum));
                 }
             }
         }
-
-        private byte[] stringToASSCII(string text)
+        /// <summary>
+        /// Get ASSCII code from given string.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>ASCII byte[]   </returns>
+        private byte[] stringToASCII(string text)
              => Encoding.ASCII.GetBytes(text);
-
+        /// <summary>
+        /// Fill Binary code to 8-bit.
+        /// </summary>
+        /// <param name="binary"></param>
+        /// <returns>8-bit Binary</returns>
         private string FillBytes(string binary)
              => binary = FillZeros(binary);
-
+        /// <summary>
+        /// Fill zeroes in front of given Binary code.
+        /// </summary>
+        /// <param name="digits"></param>
+        /// <returns>8-bit Binary code</returns>
         private string FillZeros(string digits)
         {
             while (digits.Length < 8)
@@ -61,7 +75,12 @@ namespace Hash_Table
             }
             return digits;
         }
-        private string ASSCIIToBinary(byte[] asciiCode)
+        /// <summary>
+        /// Get Binary from given ASCII code.
+        /// </summary>
+        /// <param name="asciiCode"></param>
+        /// <returns>Binary code</returns>
+        private string ASCIIToBinary(byte[] asciiCode)
         {
             string binary = string.Empty;
             for (int i = asciiCode.Length - 1; i >= 0; i--)
@@ -71,6 +90,11 @@ namespace Hash_Table
 
             return binary;
         }
+        /// <summary>
+        /// Get Decimal from given Binary code.
+        /// </summary>
+        /// <param name="binaryCode"></param>
+        /// <returns>Decimal value </returns>
         private long BinaryToDecimal(Binary binaryCode)
              => Convert.ToInt64(binaryCode.ToString(), 2);
 

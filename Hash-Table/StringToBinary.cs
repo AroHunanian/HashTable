@@ -9,15 +9,11 @@ namespace Hash_Table
 {
     public class StringToBinary
     {
-        public static string SumBin(string a, string b)
-        {
-            return Convert.ToString(Convert.ToInt32(a, 2) + Convert.ToInt32(b, 2), 2);
-
-        }
-        public static long SumDec(string a,string b)
-        {
-            return   BinaryToDecimal(SumBin(a,b));
-        }
+        /// <summary>
+        /// Find equivalent Twos Compelent code of Binary code 
+        /// </summary>
+        /// <param name="dec"></param>
+        /// <returns>Twos Compelent Binary code</returns>
         private static string FindTwoscomplement(string dec)
         {
             string modifiedDec = dec;
@@ -36,11 +32,21 @@ namespace Hash_Table
             // return the modified string
             return modifiedDec;
         }
+        /// <summary>
+        /// Add 1 in the end of Binary code
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
         private static string AddOne(string a)
         {
             string one = "00000000000000000000000000000001";
             return Convert.ToString(Convert.ToInt32(a, 2) + Convert.ToInt32(one, 2), 2);
         }
+        /// <summary>
+        /// Get Binary To Decimal
+        /// </summary>
+        /// <param name="binary"></param>
+        /// <returns>Decimal value of Binary code</returns>
         private static long BinaryToDecimal(string binary)
         {
             long sum = 0;
@@ -53,6 +59,11 @@ namespace Hash_Table
             }
             return sum * -1;
         }
+        /// <summary>
+        /// Get Signed Decimal from given Binary Code
+        /// </summary>
+        /// <param name="binary"></param>
+        /// <returns>Signed Decimal</returns>
         public static long SignedDecimal(Binary binary)
         {
 
