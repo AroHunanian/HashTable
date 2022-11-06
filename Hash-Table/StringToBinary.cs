@@ -9,13 +9,14 @@ namespace Hash_Table
 {
     public class StringToBinary
     {
-        public static void SumBin(string a, string b, out string sumBin, out long sumDec)
+        public static string SumBin(string a, string b)
         {
-            int number_one = Convert.ToInt32(a, 2);
-            int number_two = Convert.ToInt32(b, 2);
-            sumBin = Convert.ToString(number_one + number_two, 2);
-            string dec = Convert.ToString((number_one) + number_two, 2);
-            sumDec = BinaryToDecimal((dec));
+            return Convert.ToString(Convert.ToInt32(a, 2) + Convert.ToInt32(b, 2), 2);
+
+        }
+        public static long SumDec(string a,string b)
+        {
+            return   BinaryToDecimal(SumBin(a,b));
         }
         private static string FindTwoscomplement(string dec)
         {
@@ -35,28 +36,10 @@ namespace Hash_Table
             // return the modified string
             return modifiedDec;
         }
-        private static string AddOne(string a, string b)
+        private static string AddOne(string a)
         {
-            int i = a.Length - 1;
-            int j = b.Length - 1;
-            int sum = 0;
-            string result = "";
-            while (i > 0 || j > 0)
-            {
-                if (i >= 0)
-                {
-                    sum += a[i--] - '0';
-                }
-                if (j >= 0)
-                {
-                    sum += b[j--] - '0';
-                }
-                result = sum % 2 + result;
-                sum /= 2;
-            }
-            if (i > 0)
-                result = result + sum;
-            return result;
+            string one = "00000000000000000000000000000001";
+            return Convert.ToString(Convert.ToInt32(a, 2) + Convert.ToInt32(one, 2), 2);
         }
         private static long BinaryToDecimal(string binary)
         {
@@ -68,7 +51,16 @@ namespace Hash_Table
                     sum += (long)Math.Pow(2, i);
                 }
             }
-            return sum;
+            return sum * -1;
+        }
+        public static long SignedDecimal(Binary binary)
+        {
+
+
+           return(
+                    BinaryToDecimal(
+                    AddOne(
+                    FindTwoscomplement(binary.ToString() ))));
         }
     }
 
